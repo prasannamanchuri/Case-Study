@@ -21,5 +21,23 @@ public class AuthenticationService {
 	public Userinfo addUser(Userinfo userinfo) {
 		return authDao.addUser(userinfo);
 	}
+	public Userinfo login(String Username,String Password) {
+		List<Userinfo>  userList=authDao.getuserinfobyusername(Username);
+		for( int i=0;i<userList.size();i++)
+		{
+			if(userList.get(i).getUsername().equals(Username)&&userList.get(i).getPassword().equals(Password))
+			{
+				return userList.get(i);
+			}
+			else
+			{
+				return null;
+			}
+		}
+		return null;
+		
+	
+		
+	}
 
 }
