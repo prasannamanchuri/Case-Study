@@ -21,5 +21,9 @@ public class AuthenticationDao {
 	public Userinfo addUser(Userinfo userinfo) {
 		return userinfoRepo.save(userinfo);
 	}
+	public List<Userinfo> getuserinfobyusername(String Username) {
+		return userinfoRepo.findByusername(Username);
+	}
+	
 
 }

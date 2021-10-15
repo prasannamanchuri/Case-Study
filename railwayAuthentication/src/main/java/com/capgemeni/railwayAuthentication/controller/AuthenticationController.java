@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,16 +29,21 @@ public class AuthenticationController {
     }
 	
 	@RequestMapping(value="/addUser",method=RequestMethod.POST)
-	public @ResponseBody Userinfo addUser(@RequestParam String Name,@RequestParam String Username,@RequestParam String Password,@RequestParam int Contact,@RequestParam String Address,@RequestParam String Usertype) {
+	public @ResponseBody Userinfo addUser(@RequestParam String Username,@RequestParam String Password,@RequestParam String Contact,@RequestParam String Address,@RequestParam String Usertype) {
 		Userinfo userinfo=new Userinfo();
-		userinfo.setName(Name);
-		userinfo.setUserName(Username);
+		userinfo.setUsername(Username);
 		userinfo.setAddress(Address);
 		userinfo.setContact(Contact);
 		userinfo.setPassword(Password);
 		userinfo.setUsertype(Usertype);
 		return authService.addUser(userinfo);
 	}
+	@PostMapping("/login")
+	public @ResponseBody Userinfo login(@RequestParam String Username,@RequestParam String Password)
+	{
+		return authService.login(Username,Password);
+	}
 
 
 }
+ 
