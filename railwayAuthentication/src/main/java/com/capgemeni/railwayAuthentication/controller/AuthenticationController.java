@@ -29,7 +29,8 @@ public class AuthenticationController {
     }
 	
 	@RequestMapping(value="/addUser",method=RequestMethod.POST)
-	public @ResponseBody Userinfo addUser(@RequestParam String Username,@RequestParam String Password,@RequestParam String Contact,@RequestParam String Address,@RequestParam String Usertype) {
+	public @ResponseBody Userinfo addUser(@RequestParam String Username,@RequestParam String Password,@RequestParam String Contact,@RequestParam String Address,@RequestParam String Usertype) 
+	{
 		Userinfo userinfo=new Userinfo();
 		userinfo.setUsername(Username);
 		userinfo.setAddress(Address);

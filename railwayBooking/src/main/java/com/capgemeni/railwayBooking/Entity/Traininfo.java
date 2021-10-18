@@ -17,6 +17,7 @@ public class Traininfo {
 	private double class_a_amount;
 	private double class_b_amount;
 	private double class_c_amount;
+	public Traininfo() {}
 	public String getTrainname() {
 		return trainname;
 	}
