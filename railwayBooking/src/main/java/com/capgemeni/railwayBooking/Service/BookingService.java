@@ -35,7 +35,7 @@ public class BookingService {
 								amount = passengercount * traininfobyname[i].getClass_a_amount();
 								tinfo.setClass_a_seats(traininfobyname[i].getClass_a_seats() - passengercount);
 							} else {
-								map.put(status, "no ticket available in class A");
+								map.put("status", "no ticket available in class A");
 								return map;
 							}
 							break;
@@ -44,7 +44,7 @@ public class BookingService {
 								amount = passengercount * traininfobyname[i].getClass_b_amount();
 								tinfo.setClass_b_seats(traininfobyname[i].getClass_b_seats() - passengercount);
 							} else {
-								map.put(status, "no ticket available in class B");
+								map.put("status", "no ticket available in class B");
 								return map;
 							}
 							break;
@@ -54,7 +54,7 @@ public class BookingService {
 								amount = passengercount * traininfobyname[i].getClass_c_amount();
 								tinfo.setClass_c_seats(traininfobyname[i].getClass_c_seats() - passengercount);
 							} else {
-								map.put(status, "no ticket available in class C");
+								map.put("status", "no ticket available in class C");
 								return map;
 							}
 							break;
@@ -83,7 +83,7 @@ public class BookingService {
 	}
 
 	public  Map<String, Object> cancelation(String trainname, String username, Traininfo[] trainnameinfo, int adultCount,
-			int childCount) {
+			int childCount,String typeClass) {
 		Map<String, Object> map = new HashMap<>();
 		String status = "";
 		double amount = 0;
@@ -100,7 +100,7 @@ public class BookingService {
 			int count=adultCount+childCount;
 			
 			if (tinfo.getTrainname().equals(trainname)) 
-				switch (actualbookinginfo.getTypeofclass()) {
+				switch (typeClass) {
 				case "A":
 					amount = (actualbookinginfo.getPrice()) - (count * tinfo.getClass_a_amount());
 					tinfo.setClass_a_seats(trainnameinfo[0].getClass_a_seats()-count);
