@@ -1,15 +1,17 @@
-package com.capgemeni.trainService;
+package com.capgemini.zuulgatewayServer;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 
 @SpringBootApplication
+@EnableZuulProxy
 @EnableDiscoveryClient
-public class TrainServiceApplication {
+public class ZuulgatewayServerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(TrainServiceApplication.class, args);
+		SpringApplication.run(ZuulgatewayServerApplication.class, args);
 	}
 
 }

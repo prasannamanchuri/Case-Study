@@ -6,9 +6,3 @@ spring:
         uri: mongodb://localhost:27017/railwaydata
 server:
   port: 8890
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8888/eureka
-  instance:
-    preferIpAddress: true

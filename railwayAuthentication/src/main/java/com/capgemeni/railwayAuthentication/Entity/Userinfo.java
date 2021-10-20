@@ -40,10 +40,8 @@ public class Userinfo {
 		this.usertype = usertype;
 	}
 	public Userinfo() {}
-	@Override
-	public String toString() {
-		return "Userinfo [username=" + username + ", password=" + password + ", contact=" + contact
-				+ ", address=" + address + ", usertype=" + usertype + "]";
+	public Userinfo(String string, String string2, String string3, String string4, String string5) {
+		// TODO Auto-generated constructor stub
 	}
 	
 	
