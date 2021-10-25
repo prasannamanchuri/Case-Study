@@ -1,0 +1,173 @@
+<div class="h-50">
+    <form name="form" (ngSubmit)="searchTrains(t)" #t="ngForm" novalidate>
+        <div class="card" style="background-color: #b9cbdf">
+            <div class="card-body">
+                
+                    <div class="row text-dark">
+                        <mat-form-field appearance="fill" class="col-4">
+                            <mat-label>From City</mat-label>
+                            <input matInput placeholder="From City" type="text" name="from" [(ngModel)]="avilableTrainModel.from" #from="ngModel" [ngClass]="{'is-invalid':t.submitted && from.invalid}" required>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" class="col-4">
+                            <mat-label>To City</mat-label>
+                            <input matInput placeholder="To City" type="text" name="to" [(ngModel)]="avilableTrainModel.to" #to="ngModel" [ngClass]="{'is-invalid':t.submitted && to.invalid}" required>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" class="col-4">
+                            <mat-label>Travel Date</mat-label>
+                            <input matInput [matDatepicker]="picker" placeholder="Date" type="text" name="selDate" [(ngModel)]="avilableTrainModel.selDate" #selDate="ngModel" [ngClass]="{'is-invalid':t.submitted && selDate.invalid}" required>
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field> 
+                    </div>
+                
+            </div>
+            <div class="card-footer transparent text-center">
+                <button class="btn btn-sm btn-primary" mat-raised-button>Search Trains</button>
+            </div>
+        </div>
+    </form>
+</div>
+<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+    <thead>
+      <tr>
+        <th>Action</th>
+        <th>Train Name</th>
+        <th>From City</th>
+        <th>To City</th>
+        <th>Travel Date</th>
+        <th>Class A Seats</th>
+        <th>Class B Seats</th>
+        <th>Class C Seats</th>
+        <th>Class A Amount</th>
+        <th>Class B Amount</th>
+        <th>Class C Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let train of trainList">
+            <td>
+                <button class="btn btn-primary btn-sm float-right mt-1 mb-1" (click)='setSelectedTrain(train);open(bookingModal)'>Booking</button>
+            </td>
+            <td>{{train.trainname}}</td>
+            <td>{{train.from}}</td>
+            <td>{{train.to}}</td>
+            <td>{{train.date  | date:"MM/dd/yy"}}</td>
+            <td>{{train.class_a_seats}}</td>
+            <td>{{train.class_b_seats}}</td>
+            <td>{{train.class_c_seats}}</td>
+            <td>{{train.class_a_amount}}</td>
+            <td>{{train.class_b_amount}}</td>
+            <td>{{train.class_c_amount}}</td>
+        </tr>
+    </tbody>
+  </table>
+<!-- <button class="btn btn-primary btn-sm float-right mt-1 mb-1" (click)=
+'open(bookingModal)'>Booking</button>
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+    <thead>
+      <tr>
+        <th>Action</th>
+        <th>Train-Name</th>
+        <th>Username</th>
+        <th>Adult Count</th>
+        <th>Child Count</th>
+        <th>Class Type</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let booking of bookingList">
+            <td>
+                <div class="row">
+                 <div class="col-2">
+                     <button class="btn btn-sm transparent" (click)="setForm(booking);open(editbookingModal)">
+                        <mat-icon>edit</mat-icon>
+                     </button>
+                 </div>
+                 <div class="col-2">
+                    <button class="btn btn-sm transparent text-danger" (click)="cancelbooking(booking)">
+                        <mat-icon>close</mat-icon>
+                     </button>
+                 </div>
+                </div>
+            </td>
+            <td *ngIf="booking.trainInfo!=null">{{booking.trainInfo.trainname}}</td>
+            <td *ngIf="booking.trainInfo===null"></td>
+            <td>{{booking.userinfo.username}}</td>
+            <td>{{booking.noofadult}}</td>
+            <td>{{booking.noofchildren}}</td>
+            <td>{{booking.typeofclass}}</td>
+        </tr>
+    </tbody>
+  </table> -->
+<ng-template #bookingModal let-modal id="bookingModal">
+    <div class="modal-header">
+        <h1 class="modal-title text-primary">Booking</h1>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">X</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="container">
+            <div class="row">
+                <mat-form-field appearance="fill">
+                    <mat-label>Select Seat type</mat-label>
+                    <mat-select [(value)]="seltypeofclass">
+                        <mat-option *ngFor="let type of classTypes" [value]="type">
+                            {{type}}
+                        </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+            </div>
+            <div clas="row">
+                <mat-form-field appearance="fill">
+                    <mat-label>Adult Count</mat-label>
+                    <input matInput placeholder="adultcount" type="text" name="adultCount"  [(ngModel)]="adultCount">
+                </mat-form-field> 
+            </div>
+            <div class="row">
+                <mat-form-field appearance="fill">
+                    <mat-label>Child Count</mat-label>
+                    <input matInput placeholder="childcount" type="text" name="childCount"  [(ngModel)]="childCount">
+                </mat-form-field>
+            </div>
+            <button class="btn btn-primary btn-sm" type="submit" (click)="booking()">Book Seats</button>
+        </div>
+    </div>
+</ng-template>
+<ng-template #editbookingModal let-modal id="editbookingModal">
+    <div class="modal-header">
+        <h1 class="modal-title text-primary">edit Booking</h1>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">X</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="container">
+        <form name="form" (ngSubmit)="editbooking(t)" #t="ngForm" novalidate>
+            <input type="hidden"  name="_id" [(ngModel)]="editBookingModel._id" #_id="ngModel" [ngClass]="{'is-invalid':t.submitted && _id.invalid}" required>
+            <div class="row">
+                <mat-form-field class="col-6">
+                    <mat-label>TrainName</mat-label>
+                    <input matInput placeholder="trainname" type="text" name="trainname" [(ngModel)]="editBookingModel.trainname" #trainname="ngModel" [ngClass]="{'is-invalid':t.submitted && trainname.invalid}" required>
+                </mat-form-field>
+                <mat-form-field class="col-6">
+                    <mat-label>adultCount</mat-label>
+                    <input matInput placeholder="noofadult" type="text" name="noofadult" [(ngModel)]="editBookingModel.noofadult" #noofadult="ngModel" [ngClass]="{'is-invalid':t.submitted && noofadult.invalid}" required>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field class="col-6">
+                    <mat-label>childcount</mat-label>
+                    <input matInput placeholder="noofchildren" type="text" name="noofchildren" [(ngModel)]="editBookingModel.noofchildren" #noofchildren="ngModel" [ngClass]="{'is-invalid':t.submitted && noofchildren.invalid}" required>
+                </mat-form-field>
+                <mat-form-field class="col-6">
+                    <mat-label>classType</mat-label>
+                    <input matInput placeholder="typeofclass" type="text" name="typeofclass" [(ngModel)]="editBookingModel.typeofclass" #typeofclass="ngModel" [ngClass]="{'is-invalid':t.submitted && typeofclass.invalid}" required>
+                </mat-form-field>
+            </div>
+            
+            <button class="btn btn-primary btn-sm" type="submit">Edit Train</button>
+        </form>
+        </div>
+    </div>
+</ng-template>

@@ -1,0 +1,186 @@
+<button class="btn btn-primary btn-sm float-right mt-1 mb-1" (click)=
+'open(addtrainModal)'>AddTrain</button>
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+    <thead>
+      <tr>
+        <th>Action</th>
+        <th>Train-Name</th>
+        <th>From</th>
+        <th>To</th>
+        <th>Date</th>
+        <th>Status</th>
+        <th>Class-A-Seats</th>
+        <th>Class-B-Seats</th>
+        <th>Class-C-Seats</th>
+        <th>Class-A-Amount</th>
+        <th>Class-B-Amount</th>
+        <th>Class-C-Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let train of trainlist">
+            <td>
+                <div class="row">
+                 <div class="col-2">
+                     <button class="btn btn-sm transparent" (click)="setForm(train.trainname,'edit');open(edittrainModal)">
+                        <mat-icon>edit</mat-icon>
+                     </button>
+                 </div>
+                 <div class="col-2">
+                    <button class="btn btn-sm transparent" (click)="setForm(train.trainname,'delete');deleteTrain(train.trainname)">
+                        <mat-icon>delete</mat-icon>
+                     </button>
+                 </div>
+                </div>
+            </td>
+            <td>{{train.trainname}}</td>
+            <td>{{train.from}}</td>
+            <td>{{train.to}}</td>
+            <td>{{train.date  | date:"MM/dd/yy"}}</td>
+            <td>{{train.status}}</td>
+            <td>{{train.class_a_seats}}</td>
+            <td>{{train.class_b_seats}}</td>
+            <td>{{train.class_c_seats}}</td>
+            <td>{{train.class_a_amount}}</td>
+            <td>{{train.class_b_amount}}</td>
+            <td>{{train.class_c_amount}}</td>
+        </tr>
+    </tbody>
+  </table>
+<ng-template #addtrainModal let-modal id="addtrainModal">
+    <div class="modal-header">
+        <h1 class="modal-title text-primary">Add Train</h1>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">X</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="container">
+        <form name="form" (ngSubmit)="addTrain(t)" #t="ngForm" novalidate>
+            <div class="row">
+                <mat-form-field class="col-6">
+                    <mat-label>Trainname</mat-label>
+                    <input matInput placeholder="trainname" type="text" name="trainname" [(ngModel)]="trainModel.trainname" #trainname="ngModel" [ngClass]="{'is-invalid':t.submitted && trainname.invalid}" required>
+                </mat-form-field>
+                <mat-form-field class="col-6">
+                    <mat-label>Train From</mat-label>
+                    <input matInput placeholder="from" type="text" name="from" [(ngModel)]="trainModel.from" #from="ngModel" [ngClass]="{'is-invalid':t.submitted && from.invalid}" required>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field class="col-6">
+                    <mat-label>Train To</mat-label>
+                    <input matInput placeholder="to" type="text" name="to" [(ngModel)]="trainModel.to" #to="ngModel" [ngClass]="{'is-invalid':t.submitted && to.invalid}" required>
+                </mat-form-field>
+                <mat-form-field class="col-6">
+                    <mat-label>Date</mat-label>
+                    <input matInput placeholder="date" type="text" name="date" [(ngModel)]="trainModel.date" #date="ngModel" [ngClass]="{'is-invalid':t.submitted && date.invalid}" required>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field class="col-6">
+                    <mat-label>no of seats_a</mat-label>
+                    <input matInput placeholder="class_a_seats" type="text" name="class_a_seats" [(ngModel)]="trainModel.class_a_seats" #class_a_seats="ngModel" [ngClass]="{'is-invalid':t.submitted && class_a_seats.invalid}" required>
+                </mat-form-field>
+                <mat-form-field class="col-6">
+                    <mat-label>no of seats_b</mat-label>
+                    <input matInput placeholder="class_b_seats" type="text" name="class_b_seats" [(ngModel)]="trainModel.class_b_seats" #class_b_seats="ngModel" [ngClass]="{'is-invalid':t.submitted && class_b_seats.invalid}" required>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field class="col-6">
+                    <mat-label>no of seats_c</mat-label>
+                    <input matInput placeholder="class_c_seats" type="text" name="class_c_seats" [(ngModel)]="trainModel.class_c_seats" #class_c_seats="ngModel" [ngClass]="{'is-invalid':t.submitted && class_c_seats.invalid}" required>
+                </mat-form-field>
+                <mat-form-field class="col-6">
+                    <mat-label>amount in seats_a</mat-label>
+                    <input matInput placeholder="class_a_amount" type="text" name="class_a_amount" [(ngModel)]="trainModel.class_a_amount" #class_a_amount="ngModel" [ngClass]="{'is-invalid':t.submitted && class_a_amount.invalid}" required>
+                </mat-form-field>
+            </div>
+            <div class="row">
+               <mat-form-field class="col-6">
+                    <mat-label>amount in seats_b</mat-label>
+                    <input matInput placeholder="class_b_amount" type="text" name="class_b_amount" [(ngModel)]="trainModel.class_b_amount" #class_b_amount="ngModel" [ngClass]="{'is-invalid':t.submitted && class_b_amount.invalid}" required>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>amount in seats_c</mat-label>
+                    <input matInput placeholder="class_c_amount" type="text" name="class_c_amount" [(ngModel)]="trainModel.class_c_amount" #class_c_amount="ngModel" [ngClass]="{'is-invalid':t.submitted && class_c_amount.invalid}" required>
+                </mat-form-field>
+            </div>
+            <button class="btn btn-primary btn-sm" type="submit">Add Train</button>
+        </form>
+        </div>
+    </div>
+</ng-template>
+<ng-template #edittrainModal let-modal id="edittrainModal">
+    <div class="modal-header">
+        <h1 class="modal-title text-primary">edit Train</h1>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">X</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="container">
+        <form name="form" (ngSubmit)="editTrain(t1)" #t1="ngForm" novalidate>
+            <div class="row">
+                <mat-form-field class="col-6">
+                    <mat-label>Trainname</mat-label>
+                    <input matInput placeholder="trainname" type="text" name="trainname" [(ngModel)]="editTrainModel.trainname" #trainname="ngModel" [ngClass]="{'is-invalid':t1.submitted && trainname.invalid}" required>
+                </mat-form-field>
+                <mat-form-field class="col-6">
+                    <mat-label>Train From</mat-label>
+                    <input matInput placeholder="from" type="text" name="from" [(ngModel)]="editTrainModel.from" #from="ngModel" [ngClass]="{'is-invalid':t1.submitted && from.invalid}" required>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field class="col-6">
+                    <mat-label>Train To</mat-label>
+                    <input matInput placeholder="to" type="text" name="to" [(ngModel)]="editTrainModel.to" #to="ngModel" [ngClass]="{'is-invalid':t1.submitted && to.invalid}" required>
+                </mat-form-field>
+                <mat-form-field class="col-6">
+                    <mat-label>Date</mat-label>
+                    <input matInput placeholder="date" type="text" name="date" [(ngModel)]="editTrainModel.date" #date="ngModel" [ngClass]="{'is-invalid':t1.submitted && date.invalid}" required>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field class="col-6">
+                    <mat-label>status</mat-label>
+                    <input matInput placeholder="status" type="text" name="status" [(ngModel)]="editTrainModel.status" #status="ngModel" [ngClass]="{'is-invalid':t1.submitted && status.invalid}" required>
+                </mat-form-field>
+                <mat-form-field class="col-6">
+                    <mat-label>no of seats_a</mat-label>
+                    <input matInput placeholder="class_a_seats" type="text" name="class_a_seats" [(ngModel)]="editTrainModel.class_a_seats" #class_a_seats="ngModel" [ngClass]="{'is-invalid':t1.submitted && class_a_seats.invalid}" required>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field class="col-6">
+                    <mat-label>no of seats_b</mat-label>
+                    <input matInput placeholder="class_b_seats" type="text" name="class_b_seats" [(ngModel)]="editTrainModel.class_b_seats" #class_b_seats="ngModel" [ngClass]="{'is-invalid':t1.submitted && class_b_seats.invalid}" required>
+                </mat-form-field>
+                <mat-form-field class="col-6">
+                    <mat-label>no of seats_c</mat-label>
+                    <input matInput placeholder="class_c_seats" type="text" name="class_c_seats" [(ngModel)]="editTrainModel.class_c_seats" #class_c_seats="ngModel" [ngClass]="{'is-invalid':t1.submitted && class_c_seats.invalid}" required>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field class="col-6">
+                    <mat-label>amount in seats_a</mat-label>
+                    <input matInput placeholder="class_a_amount" type="text" name="class_a_amount" [(ngModel)]="editTrainModel.class_a_amount" #class_a_amount="ngModel" [ngClass]="{'is-invalid':t1.submitted && class_a_amount.invalid}" required>
+                </mat-form-field>
+                <mat-form-field class="col-6">
+                    <mat-label>amount in seats_b</mat-label>
+                    <input matInput placeholder="class_b_amount" type="text" name="class_b_amount" [(ngModel)]="editTrainModel.class_b_amount" #class_b_amount="ngModel" [ngClass]="{'is-invalid':t1.submitted && class_b_amount.invalid}" required>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field class="col-6">
+                    <mat-label>amount in seats_c</mat-label>
+                    <input matInput placeholder="class_c_amount" type="text" name="class_c_amount" [(ngModel)]="editTrainModel.class_c_amount" #class_c_amount="ngModel" [ngClass]="{'is-invalid':t1.submitted && class_c_amount.invalid}" required>
+                </mat-form-field>
+            </div>
+            <button class="btn btn-primary btn-sm" type="submit">Edit Train</button>
+        </form>
+        </div>
+    </div>
+</ng-template>
+

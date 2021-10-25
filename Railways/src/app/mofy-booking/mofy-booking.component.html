@@ -1,0 +1,42 @@
+<div class="card">
+   <div class="card-body">
+       <div class="row">
+            <mat-form-field appearance="fill" class="col-6">
+                <mat-label>Enter Ticket No</mat-label>
+                <input type="text" matInput [(ngModel)]="ticketNo">
+            </mat-form-field>
+            <div class="col-3">
+                <button mat-raised-button class="btn btn-primary btn-sm" (click)="fetchTicketDetails()">Fetch Ticket Details</button>
+            </div>
+        </div>
+    </div>
+</div>
+<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+    <thead>
+      <tr>
+        <th>Action</th>
+        <th>Ticket No</th>
+        <th>Status</th>
+        <th>Train-Name</th>
+        <th>Adult Count</th>
+        <th>Child Count</th>
+        <th>Class Type</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let booking of bookingList">
+            <td>
+                <button class="btn btn-sm transparent text-danger" (click)="cancelbooking(booking)">
+                    <mat-icon>close</mat-icon>
+                 </button>
+            </td>
+            <td>{{booking.ticketNo}}</td>
+            <td>{{booking.status}}</td>
+            <td *ngIf="booking.trainInfo!=null">{{booking.trainInfo.trainname}}</td>
+            <td *ngIf="booking.trainInfo===null"></td>
+            <td>{{booking.noofadult}}</td>
+            <td>{{booking.noofchildren}}</td>
+            <td>{{booking.typeofclass}}</td>
+        </tr>
+    </tbody>
+  </table>

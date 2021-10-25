@@ -1,0 +1,50 @@
+.main-content {
+    padding: 20px;
+}
+#snav .mat-nav-list .mat-list-item {
+    height: 45px;
+    margin-bottom: 10px;
+    align-items: center;
+    display: flex;
+    white-space: nowrap;
+    color: #8f999e;
+}
+.active-link {
+    background: #26c6da;
+    border-radius: 4px;
+    color: #ffffff !important;
+}
+.mat-toolbar.mat-primary {
+    background: #1e88e5;
+    color:white;
+}
+.user-info p{
+    font-size: 13px;
+    line-height: 22px;
+    text-align: center;
+}
+::ng-deep thead th input {
+    background-color: transparent;
+    border:none;
+    border-bottom:1px solid #9e9e9e;
+    border-radius:0;
+    outline:0;
+    width:100%;
+    font-size: 0.8rem;
+    padding: 0;
+    box-shadow: none;
+    box-sizing: content-box;
+    transition: all .3s;
+}
+.home-container{
+    background: url(../assets/wp5521940.jpg) no-repeat   center center fixed;
+    position: fixed; 
+    left: 0; 
+        
+    /* Preserve aspect ratio */
+    min-width: 100%;
+    min-height: 100%;
+}
+.menu-spacer {
+    flex: 1 1 auto;
+  }

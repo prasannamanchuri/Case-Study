@@ -1,0 +1,24 @@
+<div class="card w-25 text-white" style="margin-left:5rem;margin-top:8rem;background:#9966">
+    <div class="card-header">
+        <h1 class="card-title" style="text-align:center">Login</h1>
+    </div>
+    <div class="card-body ml-2">
+        <form name="form" (ngSubmit)="login(t)" #t="ngForm" novalidate>
+            <div class="row">
+                <mat-form-field>
+                    <mat-label class="text-white">Username</mat-label>
+                    <input  class="text-warning" matInput placeholder="username" type="text" name="username" [(ngModel)]="userModel.username" #username="ngModel" [ngClass]="{'is-invalid':t.submitted && username.invalid}" required>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field>
+                    <mat-label class="text-white">Password</mat-label>
+                    <input class="text-warning" matInput placeholder="password" type="password" name="password" [(ngModel)]="userModel.password" #password="ngModel" [ngClass]="{'is-invalid':t.submitted && password.invalid}" required>
+                </mat-form-field>
+            </div>
+            <button mat-raised-button color="primary" type="submit">Submit</button>
+        </form>
+    </div>
+</div>
+
+
