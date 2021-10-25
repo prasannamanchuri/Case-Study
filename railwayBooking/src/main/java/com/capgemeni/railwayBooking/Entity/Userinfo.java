@@ -1,4 +1,4 @@
-package com.capgemeni.railwayAuthentication.Entity;
+package com.capgemeni.railwayBooking.Entity;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -55,6 +55,5 @@ public class Userinfo {
 		this.address = address;
 		this.usertype = usertype;
 	}
-	
 	
 }

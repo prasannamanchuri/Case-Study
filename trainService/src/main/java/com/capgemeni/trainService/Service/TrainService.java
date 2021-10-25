@@ -1,6 +1,8 @@
 package com.capgemeni.trainService.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,20 +19,19 @@ public class TrainService {
 		return trainDao.getTrains();
 	}
 
-	public Traininfo addTrain(Traininfo traininfo) {
+	public String addTrain(Traininfo traininfo) {
 		return trainDao.addTrain(traininfo);
 	}
 
-	public Traininfo trainavailability(String from, String to) {
+	public List<Traininfo> fetchTrainsFromAndTo(String from, String to) {
+		List<Traininfo> list=new ArrayList<>();
 		List<Traininfo> trainList = trainDao.gettraininfobyfrom(from);
 		for (int i = 0; i < trainList.size(); i++) {
 			if (trainList.get(i).getFrom().equals(from) && trainList.get(i).getTo().equals(to)) {
-				return trainList.get(i);
-			} else {
-				return null;
+				list.add(trainList.get(i));
 			}
 		}
-		return null;
+		return list;
 	}
 
 	public List<Traininfo> traininfobyname(String trainname) {
@@ -38,7 +39,15 @@ public class TrainService {
 
 	}
 
-	public Traininfo updatetrain(Traininfo tinfo) {
+	public String updatetrain(Traininfo tinfo) {
 		return trainDao.updatetrain(tinfo);
+	}
+
+	public String deleteTrainByName(String trainname) {
+		return trainDao.deleteTrainByName(trainname);
+	}
+
+	public List<Traininfo> searchTrains(Map<String, String> map) {
+		return trainDao.searchTrains(map);
 	}
 }

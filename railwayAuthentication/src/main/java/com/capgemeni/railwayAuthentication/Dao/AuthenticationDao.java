@@ -18,8 +18,12 @@ public class AuthenticationDao {
 		return userinfoRepo.findAll();
 	}
 	
-	public Userinfo addUser(Userinfo userinfo) {
-		return userinfoRepo.save(userinfo);
+	public String addUser(Userinfo userinfo) {
+		Userinfo user= userinfoRepo.save(userinfo);
+		if(user!=null)
+			return "success";
+		else
+			return "Failed Signup";
 	}
 	public List<Userinfo> getuserinfobyusername(String Username) {
 		return userinfoRepo.findByusername(Username);

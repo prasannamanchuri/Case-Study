@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "train-info")
 
 public class Traininfo {
+	private String _id;
 	private String trainname;
 	private String from;
 	private String to;
@@ -83,12 +84,19 @@ public class Traininfo {
 	public void setClass_c_amount(double class_c_amount) {
 		this.class_c_amount = class_c_amount;
 	}
+	
+	public String get_id() {
+		return _id;
+	}
+	public void set_id(String _id) {
+		this._id = _id;
+	}
 	@Override
 	public String toString() {
-		return "traininfo [trainname=" + trainname + ", from=" + from + ", to=" + to + ", date=" + date + ", status="
-				+ status + ", class_a_seats=" + class_a_seats + ", class_b_seats=" + class_b_seats + ", class_c_seats="
-				+ class_c_seats + ", class_a_amount=" + class_a_amount + ", class_b_amount=" + class_b_amount
-				+ ", class_c_amount=" + class_c_amount + "]";
+		return "Traininfo [_id=" + _id + ", trainname=" + trainname + ", from=" + from + ", to=" + to + ", date=" + date
+				+ ", status=" + status + ", class_a_seats=" + class_a_seats + ", class_b_seats=" + class_b_seats
+				+ ", class_c_seats=" + class_c_seats + ", class_a_amount=" + class_a_amount + ", class_b_amount="
+				+ class_b_amount + ", class_c_amount=" + class_c_amount + "]";
 	}
 	public Traininfo(String trainname, String from, String to, Date date, String status, int class_a_seats,
 			int class_b_seats, int class_c_seats, double class_a_amount, double class_b_amount, double class_c_amount) {
