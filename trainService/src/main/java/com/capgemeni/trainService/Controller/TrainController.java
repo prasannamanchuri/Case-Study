@@ -1,17 +1,19 @@
 package com.capgemeni.trainService.Controller;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,6 +22,7 @@ import com.capgemeni.trainService.Service.TrainService;
 
 @RestController
 @RequestMapping("/train")
+@CrossOrigin(origins = "*")
 public class TrainController {
 	@Autowired
 	TrainService trainService;
@@ -30,21 +33,14 @@ public class TrainController {
 	}
 
 	@RequestMapping(value = "/addTrain", method = RequestMethod.POST)
-	public @ResponseBody Traininfo addTrain(@RequestParam String trainname, @RequestParam String from,
-			@RequestParam String to, @RequestParam String date, @RequestParam String status,
-			@RequestParam int class_a_seats, @RequestParam int class_b_seats, @RequestParam int class_c_seats,
-			@RequestParam int class_a_amount, @RequestParam int class_b_amount, @RequestParam int class_c_amount)
+	public @ResponseBody String addTrain(@RequestBody Traininfo traininfo)
 			throws ParseException {
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-		Traininfo traininfo = new Traininfo(trainname, from, to, sdf.parse(date), status, class_a_seats, class_b_seats,
-				class_c_seats, class_a_amount, class_b_amount, class_c_amount);
-
 		return trainService.addTrain(traininfo);
 	}
-
-	@PostMapping("/trainavailability")
-	public @ResponseBody Traininfo trainavailability(@RequestParam String from, @RequestParam String to) {
-		return trainService.trainavailability(from, to);
+	
+	@RequestMapping(value="/fetchTrainsFromAndTo",method=RequestMethod.POST)
+	public @ResponseBody List<Traininfo> fetchTrainsFromAndTo(@RequestParam String from,@RequestParam String to) {
+		return trainService.fetchTrainsFromAndTo(from,to);
 	}
 
 	@PostMapping("/traininfobyname")
@@ -52,9 +48,19 @@ public class TrainController {
 		return trainService.traininfobyname(trainname);
 	}
 
-	@RequestMapping(value = "/updatetraininfo", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Traininfo updatetraininfo(@RequestBody Traininfo tinfo) {
-		return trainService.updatetrain(tinfo);
+	@RequestMapping(value = "/updatetraininfo", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody String updatetraininfo(@RequestBody Traininfo traininfo) {
+		return trainService.updatetrain(traininfo);
+	}
+	
+	@PostMapping("/deleteTrainByName")
+	public @ResponseBody String deleteTrainByName(@RequestParam String trainname) {
+		return trainService.deleteTrainByName(trainname);
+	}
+	
+	@PostMapping("/searchTrains")
+	public @ResponseBody List<Traininfo> searchTrains(@RequestParam Map<String,String> map) {
+		return trainService.searchTrains(map);
 	}
 
 }

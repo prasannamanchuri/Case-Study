@@ -3,9 +3,11 @@ package com.capgemeni.railwayAuthentication.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,6 +19,7 @@ import com.capgemeni.railwayAuthentication.service.AuthenticationService;
 
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/auth")
 public class AuthenticationController {
 	
@@ -29,20 +32,20 @@ public class AuthenticationController {
     }
 	
 	@RequestMapping(value="/addUser",method=RequestMethod.POST)
-	public @ResponseBody Userinfo addUser(@RequestParam String Username,@RequestParam String Password,@RequestParam String Contact,@RequestParam String Address,@RequestParam String Usertype) 
+	public @ResponseBody String addUser(@RequestBody Userinfo userinfo) 
 	{
-		Userinfo userinfo=new Userinfo();
-		userinfo.setUsername(Username);
-		userinfo.setAddress(Address);
-		userinfo.setContact(Contact);
-		userinfo.setPassword(Password);
-		userinfo.setUsertype(Usertype);
 		return authService.addUser(userinfo);
 	}
 	@PostMapping("/login")
 	public @ResponseBody Userinfo login(@RequestParam String Username,@RequestParam String Password)
 	{
 		return authService.login(Username,Password);
+	}
+	
+	@PostMapping("/getUserinfoByUsername")
+	public @ResponseBody Userinfo getUserinfoByUsername(@RequestParam String username)
+	{
+		return authService.getUserinfoByUsername(username);
 	}
 
 

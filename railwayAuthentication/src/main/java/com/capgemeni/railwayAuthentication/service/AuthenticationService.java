@@ -18,7 +18,7 @@ public class AuthenticationService {
 		return authDao.getUsers();
 	}
 	
-	public Userinfo addUser(Userinfo userinfo) {
+	public String addUser(Userinfo userinfo) {
 		return authDao.addUser(userinfo);
 	}
 	public Userinfo login(String Username,String Password) {
@@ -38,6 +38,14 @@ public class AuthenticationService {
 		
 	
 		
+	}
+
+	public Userinfo getUserinfoByUsername(String username) {
+		List<Userinfo> userList= authDao.getuserinfobyusername(username);
+		if(userList.size()>0)
+			return userList.get(0);
+		else
+			return null;
 	}
 
 }
