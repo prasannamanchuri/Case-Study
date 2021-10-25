@@ -1,0 +1,74 @@
+<div *ngIf="currentUser===undefined||currentUser.username===undefined">
+  <mat-toolbar color="warn">
+    <mat-toolbar-row>
+     <h1 style="font-family: sans-serif;" class="font-weight-bold">Pakisthani Railway Reservation System</h1>
+      <span class="menu-spacer"></span>
+      <div>
+        <a mat-button [routerLink]="'/login'"> Login </a>
+        <a mat-button [routerLink]="'/signup'"> Signup </a>
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <div class="home-container">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+<div *ngIf="currentUser.username!=undefined">
+  <mat-toolbar color="warn">
+      <mat-toolbar-row>
+          <div class="navbar-header">
+              <a href="/" class="navbar-brand text-white">
+                <h1 style="font-family: sans-serif;" class="font-weight-bold">Pakisthani Railway Reservation System</h1>
+              </a>
+          </div>
+          <span class="toolbar-spacer" style="flex: 1 1 auto;"></span>
+          <small>Welcome {{currentUser.username}}</small>
+          <button mat-button [matMenuTriggerFor]="menu">
+            <mat-icon>account_circle</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu" class="mt-3" style="width: 150%;">
+              <mat-toolbar class="mt-n2" style="background:none;">
+                <div fxlayout="row" fxlayoutalign="space-around center" class="user-info" style="flex-direction:row; box-sizing:border-box;display:flex;place-content:center space-around;align-items: center;">
+                  <p class="mt-3 text-secondary">Signed in as {{currentUser.username}} <br/> {{currentUser.usertype}}</p>
+                </div>
+              </mat-toolbar>
+              <mat-divider></mat-divider>
+              <a mat-menu-item [routerLink]="'/userprofile'">
+                <mat-icon>person</mat-icon>
+                <span>My Details</span>
+              </a>
+              <a mat-menu-item (click)="logout()">
+                <mat-icon>logout</mat-icon>
+                <span>Logout</span>
+              </a>
+          </mat-menu>
+    </mat-toolbar-row>
+    </mat-toolbar>
+    <div *ngIf="currentUser.usertype!='Admin'">
+      <mat-sidenav-container autosize>
+        <mat-sidenav #sidenav mode="side" opened="true" id="snav">
+          <mat-nav-list>
+            <mat-list-item>
+                <a mat-list-item routerLink='/userview'>Booking</a>
+            </mat-list-item>
+            <mat-list-item>
+              <a mat-list-item routerLink='/history'>History</a>
+          </mat-list-item>
+          <mat-list-item>
+            <a mat-list-item routerLink='/cancel'>Cancellation</a>
+        </mat-list-item>
+          </mat-nav-list>
+        </mat-sidenav>
+        <mat-sidenav-content>
+            <div style="height: 88vh;background-color: white;" class="main-content">
+                <router-outlet></router-outlet>
+            </div>
+        </mat-sidenav-content>
+      </mat-sidenav-container>
+  </div>
+  <div *ngIf="currentUser.usertype==='Admin'">
+    <div style="height: 88vh;background-color: white;" class="main-content">
+        <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

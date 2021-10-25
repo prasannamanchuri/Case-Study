@@ -1,0 +1,40 @@
+<div class="card w-25 text-white" style="margin-left:5rem;margin-top:4rem;background:#9966">
+    <div class="card-header">
+        <h1 class="card-title" style="text-align:center">Signup</h1>
+    </div>
+    <div class="card-body ml-2">
+        <form name="form" (ngSubmit)="signup(t)" #t="ngForm" novalidate>
+            <div class="row">
+                <mat-form-field>
+                    <mat-label class="text-white">Username</mat-label>
+                    <input matInput  class="text-warning" placeholder="Username" type="text" name="username" [(ngModel)]="userModel.username" #username="ngModel" [ngClass]="{'is-invalid':t.submitted && username.invalid}" required>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field>
+                    <mat-label class="text-white">Password</mat-label>
+                    <input class="text-warning" matInput placeholder="Password" type="password" name="password" [(ngModel)]="userModel.password" #password="ngModel" [ngClass]="{'is-invalid':t.submitted && password.invalid}" required>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field>
+                    <mat-label class="text-white">Contact</mat-label>
+                    <input class="text-warning" matInput placeholder="Contact" type="text" name="contact" [(ngModel)]="userModel.contact" #contact="ngModel" [ngClass]="{'is-invalid':t.submitted && contact.invalid}" required>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field>
+                    <mat-label class="text-white">Address</mat-label>
+                    <input class="text-warning" matInput placeholder="Address" type="text" name="address" [(ngModel)]="userModel.address" #address="ngModel" [ngClass]="{'is-invalid':t.submitted && address.invalid}" required>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field>
+                    <mat-label class="text-white">Usertype</mat-label>
+                    <input class="text-warning" matInput placeholder="Usertype" type="text" name="usertype" [(ngModel)]="userModel.usertype" #usertype="ngModel" [ngClass]="{'is-invalid':t.submitted && usertype.invalid}" required>
+                </mat-form-field>
+            </div>
+            <button mat-raised-button color="primary" type="submit">Submit</button>
+        </form>
+    </div>
+</div>
