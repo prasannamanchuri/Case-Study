@@ -63,7 +63,7 @@ export class AdminViewComponent implements OnInit {
           this.trainlist=res;
           this.dtTrigger.next();
         }
-        this.toastr.success("Fetched train details Successfully");
+        //this.toastr.success("Fetched train details Successfully");
       },error=>this.toastr.error(error,'getAllTrains'));
  }
  addTrain(form){

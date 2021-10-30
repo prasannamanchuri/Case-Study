@@ -96,10 +96,9 @@ public class Bookinginfo {
 
 	
 
-	public Bookinginfo(String _id, String ticketNo, Userinfo userinfo, Traininfo trainInfo, int noofadult,
+	public Bookinginfo(String ticketNo, Userinfo userinfo, Traininfo trainInfo, int noofadult,
 			int noofchildren, String typeofclass, Double price, String status) {
 		super();
-		this._id = _id;
 		this.ticketNo = ticketNo;
 		this.userinfo = userinfo;
 		this.trainInfo = trainInfo;
