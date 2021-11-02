@@ -1,0 +1,169 @@
+<div class="row">
+    <div class="col-4">
+        <mat-card>
+            <mat-card-title>My Details</mat-card-title>
+            <mat-card-content>
+                <div class="row">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Username</mat-label>
+                        <input matInput placeholder="username" type="text" name="username" [(ngModel)]="loggedUser.username" #username="ngModel" disabled>
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Contact</mat-label>
+                        <input matInput placeholder="Contact" type="text" name="contact" [(ngModel)]="loggedUser.contact" #contact="ngModel" disabled>
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Address</mat-label>
+                        <input matInput placeholder="Address" type="text" name="address" [(ngModel)]="loggedUser.address" #address="ngModel" disabled>
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-form-field appearance="fill">
+                        <mat-label>UserType</mat-label>
+                        <input matInput placeholder="usertype" type="text" name="usertype" [(ngModel)]="loggedUser.usertype" #usertype="ngModel" disabled>
+                    </mat-form-field>
+                </div>
+            </mat-card-content>
+          </mat-card>
+    </div>
+    <div class="col-8" *ngIf="loggedUser.usertype!='Admin'">
+        <mat-card>
+            <mat-card-title>Manage Banks</mat-card-title>
+            <mat-card-content>
+                <button class="btn btn-primary btn-sm float-right mt-1 mb-1" (click)=
+                'open(addbankModal)'>AddBank</button>
+                    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                    <thead>
+                    <tr>
+                        <th>Action</th>
+                        <th>BankName</th>
+                        <th>CardNo</th>
+                        <th>CVV</th>
+                        <th>Expiry Date</th>
+                        <th>Balance</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let bank of banklist">
+                            <td>
+                                <div class="row">
+                                <div class="col-2">
+                                    <button class="btn btn-sm transparent" (click)="setForm(bank._id);open(editbankModal)">
+                                        <mat-icon>edit</mat-icon>
+                                    </button>
+                                </div>
+                                <div class="col-2">
+                                    <button class="btn btn-sm transparent" (click)="deleteBank(bank)">
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
+                                </div>
+                                </div>
+                            </td>
+                            <td>{{bank.bankname}}</td>
+                            <td>{{bank.cardNo}}</td>
+                            <td>{{bank.cvv}}</td>
+                            <td>{{bank.expirydate}}</td>
+                            <td>{{bank.balance}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </mat-card-content>
+          </mat-card>
+    </div>
+</div>
+<ng-template #addbankModal let-modal id="addbankModal">
+    <div class="modal-header">
+        <h1 class="modal-title text-primary">Add Bank</h1>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">X</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="container">
+        <form name="form" (ngSubmit)="addBank(t)" #t="ngForm" novalidate>
+            <div class="row">
+                <mat-form-field>
+                    <mat-label>BankName</mat-label>
+                    <input matInput placeholder="bankname" type="text" name="bankname" [(ngModel)]="bankModel.bankname" #bankname="ngModel" [ngClass]="{'is-invalid':t.submitted && bankname.invalid}" required>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field>
+                    <mat-label>CardNo</mat-label>
+                    <input matInput placeholder="cardNo" type="text" name="cardNo" [(ngModel)]="bankModel.cardNo" #cardNo="ngModel" [ngClass]="{'is-invalid':t.submitted && cardNo.invalid}" required>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field>
+                    <mat-label>CVV</mat-label>
+                    <input matInput placeholder="cvv" type="text" name="cvv" [(ngModel)]="bankModel.cvv" #cvv="ngModel" [ngClass]="{'is-invalid':t.submitted && cvv.invalid}" required>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field>
+                    <mat-label>Expiry Date</mat-label>
+                    <input matInput placeholder="expirydate" type="text" name="expirydate" [(ngModel)]="bankModel.expirydate" #expirydate="ngModel" [ngClass]="{'is-invalid':t.submitted && expirydate.invalid}" required>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field>
+                    <mat-label>Balance</mat-label>
+                    <input matInput placeholder="balance" type="text" name="balance" [(ngModel)]="bankModel.balance" #balance="ngModel" [ngClass]="{'is-invalid':t.submitted && balance.invalid}" required>
+                </mat-form-field>
+            </div>
+            <button class="btn btn-primary btn-sm" type="submit">Add Bank</button>
+        </form>
+        </div>
+    </div>
+</ng-template>
+<ng-template #editbankModal let-modal id="editbankModal">
+    <div class="modal-header">
+        <h1 class="modal-title text-primary">Edit Bank</h1>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">X</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="container">
+        <form name="form" (ngSubmit)="editBank(t1)" #t1="ngForm" novalidate>
+            <input type="hidden" name="_id" [(ngModel)]="editbankModel._id" #_id="ngModel">
+            <div class="row">
+                <mat-form-field>
+                    <mat-label>Bank Name</mat-label>
+                    <input matInput placeholder="bankname" type="text" name="bankname" [(ngModel)]="editbankModel.bankname" #bankname="ngModel" [ngClass]="{'is-invalid':t1.submitted && bankname.invalid}" required>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field>
+                    <mat-label>Card No</mat-label>
+                    <input matInput placeholder="cardNo" type="text" name="cardNo" [(ngModel)]="editbankModel.cardNo" #cardNo="ngModel" [ngClass]="{'is-invalid':t1.submitted && cardNo.invalid}" required>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field>
+                    <mat-label>CVV</mat-label>
+                    <input matInput placeholder="cvv" type="text" name="cvv" [(ngModel)]="editbankModel.cvv" #cvv="ngModel" [ngClass]="{'is-invalid':t1.submitted && cvv.invalid}" required>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field>
+                    <mat-label>Expiry Date</mat-label>
+                    <input matInput placeholder="expirydate" type="text" name="expirydate" [(ngModel)]="editbankModel.expirydate" #expirydate="ngModel" [ngClass]="{'is-invalid':t1.submitted && expirydate.invalid}" required>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field>
+                    <mat-label>Balance</mat-label>
+                    <input matInput placeholder="balance" type="text" name="balance" [(ngModel)]="editbankModel.balance" #balance="ngModel" [ngClass]="{'is-invalid':t1.submitted && balance.invalid}" required>
+                </mat-form-field>
+            </div>
+            <button class="btn btn-primary btn-sm" type="submit">Save</button>
+        </form>
+        </div>
+    </div>
+</ng-template>
+

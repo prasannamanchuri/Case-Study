@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.capgemeni.railwayBooking.Entity.BankInfo;
 import com.capgemeni.railwayBooking.Entity.Bookinginfo;
 import com.capgemeni.railwayBooking.Entity.Traininfo;
 import com.capgemeni.railwayBooking.Entity.Userinfo;
@@ -62,7 +64,7 @@ public class BookingController {
 	}
 
 	@PostMapping("/bookSeats")
-	public @ResponseBody String bookSeats(@RequestBody Bookinginfo bookingInfo) {
+	public @ResponseBody String bookSeats(@RequestPart("bookingInfo") Bookinginfo bookingInfo,@RequestParam String cardNo) {
 		String status="";
 		Map<String, Object> result = bookingService.addpassengers(bookingInfo);
 		System.out.println("Result......."+result);
@@ -80,9 +82,32 @@ public class BookingController {
 				status=trainUpdateStatus;
 			else
 				status=(String) result.get("status");
+			BankInfo[] bankList=getAllBanksByUserInfo(((Userinfo) result.get("userinfo")));
+			for(BankInfo bank:bankList) {
+				if(bank.getCardNo().equalsIgnoreCase(cardNo)) {
+					bank.setBalance(bank.getBalance()-((Double) result.get("price")));
+					String userStatus=updateBalance(bank);
+					if(!userStatus.equalsIgnoreCase("success"))
+						status=userStatus;
+					else
+						status=(String) result.get("status");
+				}
+			}
 		}
 		return status;
 
+	}
+	
+	private BankInfo[] getAllBanksByUserInfo(Userinfo userinfo) {
+		String url="http://localhost:8100/railwayAuthentication/auth/getAllBanksByUserInfo";
+		RestTemplate restTemplate = new RestTemplate();
+		return restTemplate.postForEntity(url, userinfo, BankInfo[].class).getBody();
+	}
+	
+	private String updateBalance(BankInfo bankinfo) {
+		String url="http://localhost:8100/railwayAuthentication/auth/editBanksForUser";
+		RestTemplate restTemplate = new RestTemplate();
+		return restTemplate.postForEntity(url, bankinfo, String.class).getBody();
 	}
 
 	private Traininfo[] gettraininfobytrainname(String trainname) {

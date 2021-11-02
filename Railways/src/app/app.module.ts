@@ -27,6 +27,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { HistoryComponent } from './history/history.component';
 import { MofyBookingComponent } from './mofy-booking/mofy-booking.component';
+import { ManageuserComponent } from './manageuser/manageuser.component';
+import { UserprofileComponent } from './userprofile/userprofile.component';
+import {MatCardModule} from '@angular/material/card';
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,7 +38,9 @@ import { MofyBookingComponent } from './mofy-booking/mofy-booking.component';
     UserViewComponent,
     AdminViewComponent,
     HistoryComponent,
-    MofyBookingComponent
+    MofyBookingComponent,
+    ManageuserComponent,
+    UserprofileComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +66,8 @@ import { MofyBookingComponent } from './mofy-booking/mofy-booking.component';
     MatSelectModule,
     MatAutocompleteModule,
     MatDatepickerModule,
-    MatNativeDateModule 
+    MatNativeDateModule ,
+    MatCardModule
   ],
   providers: [  
     MatDatepickerModule,

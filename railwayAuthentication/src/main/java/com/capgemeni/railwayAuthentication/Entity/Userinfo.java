@@ -1,5 +1,8 @@
 package com.capgemeni.railwayAuthentication.Entity;
 
+import java.util.List;
+
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "user-data")
@@ -10,6 +13,7 @@ public class Userinfo {
 	private String contact;
 	private String address ;
 	private String usertype;
+	
 	public String getUsername() {
 		return username;
 	}
@@ -55,6 +59,10 @@ public class Userinfo {
 		this.address = address;
 		this.usertype = usertype;
 	}
-	
+	@Override
+	public String toString() {
+		return "Userinfo [_id=" + _id + ", username=" + username + ", password=" + password + ", contact=" + contact
+				+ ", address=" + address + ", usertype=" + usertype +"]";
+	}
 	
 }

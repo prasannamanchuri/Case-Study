@@ -118,16 +118,26 @@
                     </mat-select>
                   </mat-form-field>
             </div>
-            <div clas="row">
+            <div class="row">
                 <mat-form-field appearance="fill">
                     <mat-label>Adult Count</mat-label>
-                    <input matInput placeholder="adultcount" type="text" name="adultCount"  [(ngModel)]="adultCount">
-                </mat-form-field> 
+                    <input matInput placeholder="Adult Count" type="text" name="adultCount"  [(ngModel)]="adultCount">
+                </mat-form-field>
             </div>
             <div class="row">
                 <mat-form-field appearance="fill">
                     <mat-label>Child Count</mat-label>
                     <input matInput placeholder="childcount" type="text" name="childCount"  [(ngModel)]="childCount">
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field appearance="fill">
+                    <mat-label>Select Card</mat-label>
+                    <mat-select [(value)]="selCard">
+                        <mat-option *ngFor="let bank of banklist" [value]="bank.cardNo">
+                            {{bank.cardNo}}
+                        </mat-option>
+                    </mat-select>
                 </mat-form-field>
             </div>
             <button class="btn btn-primary btn-sm" type="submit" (click)="booking()">Book Seats</button>

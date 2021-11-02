@@ -1,0 +1,116 @@
+<button class="btn btn-primary btn-sm float-right mt-1 mb-1" (click)=
+'open(adduserModal)'>AddUser</button>
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+    <thead>
+      <tr>
+        <th>Action</th>
+        <th>Username</th>
+        <th>Contact</th>
+        <th>Address</th>
+        <th>Usertype</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of userlist">
+            <td>
+                <div class="row">
+                 <div class="col-2">
+                     <button class="btn btn-sm transparent" (click)="setForm(user.username,'edit');open(edituserModal)">
+                        <mat-icon>edit</mat-icon>
+                     </button>
+                 </div>
+                 <div class="col-2">
+                    <button class="btn btn-sm transparent" (click)="setForm(user.username,'delete');deleteUser(user.username)">
+                        <mat-icon>delete</mat-icon>
+                     </button>
+                 </div>
+                </div>
+            </td>
+            <td>{{user.username}}</td>
+            <td>{{user.contact}}</td>
+            <td>{{user.address}}</td>
+            <td>{{user.usertype}}</td>
+        </tr>
+    </tbody>
+  </table>
+<ng-template #adduserModal let-modal id="adduserModal">
+    <div class="modal-header">
+        <h1 class="modal-title text-primary">Add User</h1>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">X</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="container">
+        <form name="form" (ngSubmit)="addUser(t)" #t="ngForm" novalidate>
+            <div class="row">
+                <mat-form-field>
+                    <mat-label>Username</mat-label>
+                    <input matInput placeholder="username" type="text" name="username" [(ngModel)]="userModel.username" #username="ngModel" [ngClass]="{'is-invalid':t.submitted && username.invalid}" required>
+                </mat-form-field>
+            </div>
+            <div class="form">
+                <mat-form-field>
+                    <mat-label>Contact</mat-label>
+                    <input matInput placeholder="contact" type="text" name="contact" [(ngModel)]="userModel.contact" #contact="ngModel" [ngClass]="{'is-invalid':t.submitted && contact.invalid}" required>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field>
+                    <mat-label>Address</mat-label>
+                    <input matInput placeholder="address" type="text" name="address" [(ngModel)]="userModel.address" #address="ngModel" [ngClass]="{'is-invalid':t.submitted && address.invalid}" required>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field class="col-6">
+                    <mat-label>User Type</mat-label>
+                    <input matInput placeholder="usertype" type="text" name="usertype" [(ngModel)]="userModel.usertype" #usertype="ngModel" [ngClass]="{'is-invalid':t.submitted && usertype.invalid}" required>
+                </mat-form-field>
+            </div>
+            <button class="btn btn-primary btn-sm" type="submit">Add User</button>
+        </form>
+        </div>
+    </div>
+</ng-template>
+<ng-template #edituserModal let-modal id="edituserModal">
+    <div class="modal-header">
+        <h1 class="modal-title text-primary">Edit User</h1>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">X</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="container">
+        <form name="form" (ngSubmit)="editUser(t1)" #t1="ngForm" novalidate>
+            <input type="hidden" name="_id" [(ngModel)]="editUserModel._id" #_id="ngModel">
+            <input type="hidden" name="password" [(ngModel)]="editUserModel.password" #password="ngModel">
+            <div class="row">
+                <mat-form-field>
+                    <mat-label>Username</mat-label>
+                    <input matInput placeholder="username" type="text" name="username" [(ngModel)]="editUserModel.username" #username="ngModel" [ngClass]="{'is-invalid':t1.submitted && username.invalid}" required>
+                </mat-form-field>
+            </div>
+            <div class="form">
+                <mat-form-field>
+                    <mat-label>Contact</mat-label>
+                    <input matInput placeholder="contact" type="text" name="contact" [(ngModel)]="editUserModel.contact" #contact="ngModel" [ngClass]="{'is-invalid':t1.submitted && contact.invalid}" required>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field>
+                    <mat-label>Address</mat-label>
+                    <input matInput placeholder="address" type="text" name="address" [(ngModel)]="editUserModel.address" #address="ngModel" [ngClass]="{'is-invalid':t1.submitted && address.invalid}" required>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field class="col-6">
+                    <mat-label>User Type</mat-label>
+                    <input matInput placeholder="usertype" type="text" name="usertype" [(ngModel)]="editUserModel.usertype" #usertype="ngModel" [ngClass]="{'is-invalid':t1.submitted && usertype.invalid}" required>
+                </mat-form-field>
+            </div>
+            <button class="btn btn-primary btn-sm" type="submit">Save</button>
+        </form>
+        </div>
+    </div>
+</ng-template>
+
