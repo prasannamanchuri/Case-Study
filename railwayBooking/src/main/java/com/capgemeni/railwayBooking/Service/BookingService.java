@@ -81,6 +81,9 @@ public class BookingService {
 		}
 		map.put("status", status);
 		map.put("Traininfo", tinfo);
+		Userinfo user=bookinginfo.getUserinfo();
+		map.put("userinfo", user);
+		map.put("price", amount);
 		return map;
 	}
 

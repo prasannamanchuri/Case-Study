@@ -24,8 +24,8 @@ export class BookingService{
         return this.http.post(`${this.baseUrl}/trainService/train/searchTrains`,formdata);
     }
 
-    bookSeats(bookinginfo:BookingInfo):any{
-        return this.http.post(`${this.baseUrl}/ralwayBooking/booking/bookSeats`,bookinginfo,{responseType:"text"});
+    bookSeats(formdata:FormData):any{
+        return this.http.post(`${this.baseUrl}/ralwayBooking/booking/bookSeats`,formdata,{responseType:"text"});
     }
 
     editbooking(bookingInfo: BookingInfo):any{

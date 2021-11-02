@@ -72,7 +72,7 @@ class BookingControllerTest {
 	    headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<Traininfo> request = new HttpEntity<Traininfo>(traininfo, headers);
 		Mockito.when(restTemplate.postForEntity(Mockito.anyString(), Mockito.any(), Mockito.eq(String.class), Mockito.<Object>any())).thenReturn(new ResponseEntity<String>("success", HttpStatus.ACCEPTED));
-		String status=bookingController.bookSeats(bookinginfo);
+		String status=bookingController.bookSeats(bookinginfo,"");
 		assertEquals(status, "success");
 	}
 

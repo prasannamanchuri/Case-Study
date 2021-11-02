@@ -6,6 +6,8 @@ import { Subject } from 'rxjs';
 import { AdminService } from '../_service/admin.service';
 import { TrainInfo } from '../_models/traininfo';
 import { DatePipe } from '@angular/common';
+import { UserInfo } from '../_models/userinfo';
+import { AuthenticationService } from '../_service/authentication.service';
 
 @Component({
   selector: 'app-admin-view',
@@ -23,7 +25,11 @@ export class AdminViewComponent implements OnInit {
   editTrainModel:any={};
   deleteTrainModel:any={};
   isDtInitialized:boolean;
-  constructor(private adminservice:AdminService,private toastr:ToastrService,private modalService:NgbModal) { }
+  loggedUser:UserInfo;
+  constructor(private adminservice:AdminService,private toastr:ToastrService,private modalService:NgbModal, 
+    private authenticationService:AuthenticationService) {
+    this.authenticationService.currentUser.subscribe(x=>this.loggedUser=x);
+   }
 
   ngOnInit(): void {
     this.dtOptions = {

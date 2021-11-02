@@ -13,6 +13,7 @@ import { FormControl } from '@angular/forms';
 import { AdminService } from '../_service/admin.service';
 import {map, startWith} from 'rxjs/operators';
 import { NGB_TIMEPICKER_I18N_FACTORY } from '@ng-bootstrap/ng-bootstrap/timepicker/timepicker-i18n';
+import { BankInfo } from '../_models/bankinfo';
 
 @Component({
   selector: 'app-user-view',
@@ -54,6 +55,8 @@ export class UserViewComponent implements OnInit {
     "selDate":"",
     "class_type":""
   };
+  selCard:string="";
+  banklist:BankInfo[]=[];
   selTrainInfo:TrainInfo;
 
   constructor(private toastr:ToastrService,private authenticationService:AuthenticationService,
@@ -65,7 +68,7 @@ export class UserViewComponent implements OnInit {
     this.loggineduser=this.loggedUser.username;
     console.log(this.loggedUser);
     if(this.loggedUser.usertype==='Admin')
-      this.router.navigate(['/adminview']);
+      this.router.navigate(['/managetrains']);
       this.dtOptions = {
         pagingType: 'full_numbers',
         pageLength: 5,
@@ -76,6 +79,7 @@ export class UserViewComponent implements OnInit {
         "username":this.loggedUser.username
       }
     this.getAllTrains();
+    this.getAllBanks();
   }
 
   booking(){
@@ -93,8 +97,10 @@ export class UserViewComponent implements OnInit {
       "typeofclass":this.seltypeofclass,
       "status":"Booked"
     }
-    console.log(bookingInfo);
-   this.bookingService.bookSeats(bookingInfo)
+    const formdata=new FormData();
+    formdata.append("bookingInfo",new Blob([JSON.stringify(bookingInfo)],{type:'application/json'}));
+    formdata.append("cardNo",this.selCard);
+   this.bookingService.bookSeats(formdata)
     .subscribe(res=>{
       console.log(res);
         if(res==="booking success") {
@@ -230,4 +236,11 @@ export class UserViewComponent implements OnInit {
       }
     },error=>this.toastr.error(error,'fetchTrains'));
   }
+
+  getAllBanks(){
+    this.adminService.getAllBanks(this.loggedUser)
+      .subscribe(res=>{
+        this.banklist=res;
+      },error=>this.toastr.error(error,'getAllBanks'));
+ }
 }

@@ -55,11 +55,11 @@
               <a mat-list-item routerLink='/history'>History</a>
           </mat-list-item>
           <mat-list-item>
-            <a mat-list-item routerLink='/cancel'>Cancellation</a>
+              <a mat-list-item routerLink='/cancel'>Cancellation</a>
+          </mat-list-item>
+          <mat-list-item>
+            <a mat-list-item routerLink='/userprofile'>My Profile</a>
         </mat-list-item>
-        <mat-list-item>
-          <a mat-list-item routerLink='/payment'>Payment</a>
-      </mat-list-item>
           </mat-nav-list>
         </mat-sidenav>
         <mat-sidenav-content>
@@ -70,8 +70,25 @@
       </mat-sidenav-container>
   </div>
   <div *ngIf="currentUser.usertype==='Admin'">
-    <div style="height: 88vh;background-color: white;" class="main-content">
-        <router-outlet></router-outlet>
-    </div>
+    <mat-sidenav-container autosize>
+      <mat-sidenav #sidenav mode="side" opened="true" id="snav">
+        <mat-nav-list>
+          <mat-list-item>
+              <a mat-list-item routerLink='/managetrains'>Manage Trains</a>
+          </mat-list-item>
+          <mat-list-item>
+            <a mat-list-item routerLink='/manageusers'>Manage Users</a>
+        </mat-list-item>
+        <mat-list-item>
+          <a mat-list-item routerLink='/userprofile'>My Profile</a>
+      </mat-list-item>
+        </mat-nav-list>
+      </mat-sidenav>
+      <mat-sidenav-content>
+          <div style="height: 88vh;background-color: white;" class="main-content">
+              <router-outlet></router-outlet>
+          </div>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
   </div>
 </div>
